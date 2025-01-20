@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
-# lr_model = pickle.load(open(r"lr.pkl","rb"))
+import pandas as pd
+lr_model = pickle.load(open("artifacts/lr.pkl","rb"))
 # App title
 st.title("Diabetes detection app")
 
@@ -19,11 +20,20 @@ age = st.number_input("Age")
 
 
 
-# if st.button("Submit"):
-#     data = [[pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree, age]]
-#     pred = lr_model.predict(data)
+if st.button("Submit"):
+    data = pd.DataFrame({
+        "Pregnancies": [pregnancies],
+        "Glucose": [glucose],
+        "BloodPressure": [blood_pressure],
+        "SkinThickness": [skin_thickness],
+        "Insulin": [insulin],
+        "BMI": [bmi],
+        "DiabetesPedigreeFunction": [diabetes_pedigree],
+        "Age": [age]
+    })
+    pred = lr_model.predict(data)
     
-#     if pred[0] == 1:
-#         st.success("You have Diabetes")
-#     else:
-#         st.success("You don't have Diabetes")
+    if pred[0] == 1:
+        st.success("You have Diabetes")
+    else:
+        st.success("You don't have Diabetes")
