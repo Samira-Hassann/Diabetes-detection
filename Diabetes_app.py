@@ -1,6 +1,6 @@
 import streamlit as st
 import pickle
-lr_model = pickle.load(open("lr.pkl","rb"))
+lr_model = pickle.load(open(r"lr.pkl","rb"))
 # App title
 st.title("Diabetes detection app")
 
