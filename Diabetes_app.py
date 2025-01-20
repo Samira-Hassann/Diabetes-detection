@@ -1,7 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
-lr_model = pickle.load(open("artifacts/lr.pkl","rb"))
+lr_model = pickle.load(open(r"artifacts/lr.pkl","rb"))
 # App title
 st.title("Diabetes detection app")
 
