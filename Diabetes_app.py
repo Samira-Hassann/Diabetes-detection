@@ -2,15 +2,8 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-# ==========================
-# Load Model
-# ==========================
-
 model = joblib.load("diabetes_model.pkl")
 
-# ==========================
-# Page Config
-# ==========================
 
 st.set_page_config(
     page_title="Diabetes Prediction",
@@ -18,9 +11,6 @@ st.set_page_config(
     layout="centered"
 )
 
-# ==========================
-# Title
-# ==========================
 
 st.title("🩺 Diabetes Prediction App")
 st.markdown(
@@ -29,11 +19,6 @@ st.markdown(
 
 st.divider()
 
-# ==========================
-# Inputs
-# ==========================
-
-# Row 1
 col1, col2 = st.columns(2)
 
 with col1:
@@ -50,7 +35,7 @@ with col2:
         value=120
     )
 
-# Row 2
+
 col1, col2 = st.columns(2)
 
 with col1:
@@ -67,7 +52,7 @@ with col2:
         value=20
     )
 
-# Row 3
+
 col1, col2 = st.columns(2)
 
 with col1:
@@ -84,7 +69,7 @@ with col2:
         value=25.0
     )
 
-# Row 4
+
 col1, col2 = st.columns(2)
 
 with col1:
@@ -103,9 +88,6 @@ with col2:
 
 st.divider()
 
-# ==========================
-# Predict Button
-# ==========================
 
 _, center, _ = st.columns([1, 2, 1])
 
@@ -115,9 +97,6 @@ with center:
         use_container_width=True
     )
 
-# ==========================
-# Prediction
-# ==========================
 
 if predict_btn:
 
@@ -126,7 +105,6 @@ if predict_btn:
         "Glucose": [glucose],
         "BloodPressure": [blood_pressure],
         "SkinThickness": [skin_thickness],
-        "Insulin": [insulin],
         "BMI": [bmi],
         "DiabetesPedigreeFunction": [dpf],
         "Age": [age]
@@ -134,7 +112,7 @@ if predict_btn:
 
     probability = model.predict_proba(data)[0][1]
 
-    # Your optimized threshold
+
     threshold = 0.35
 
     prediction = int(probability >= threshold)
