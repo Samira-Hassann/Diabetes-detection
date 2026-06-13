@@ -7,8 +7,7 @@ model = joblib.load("diabetes_model.pkl")
 
 # Title
 st.title("🩺 Diabetes Prediction App")
-st.subheader("Fill these data:")
-st.write("Enter patient information below:")
+st.subheader("Enter patient information below:")
 
 # Inputs
 pregnancies = st.number_input("Pregnancies", min_value=0)
