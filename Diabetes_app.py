@@ -14,10 +14,8 @@ st.set_page_config(
 
 st.title("🩺 Diabetes Prediction App")
 st.markdown(
-    "Enter the patient's clinical information to estimate diabetes risk."
+    "Enter the patient's clinical information to estimate diabetes risk:"
 )
-
-st.divider()
 
 col1, col2 = st.columns(2)
 
@@ -85,8 +83,6 @@ with col2:
         min_value=0,
         value=30
     )
-
-st.divider()
 
 
 _, center, _ = st.columns([1, 2, 1])
