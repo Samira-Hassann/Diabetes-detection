@@ -1,39 +1,47 @@
 import streamlit as st
-import pickle
 import pandas as pd
-lr_model = pickle.load(open(r"artifacts/lr.pkl","rb"))
-# App title
-st.title("Diabetes detection app")
+import joblib
 
-# Create input fields for numerical features
+# Load model
+model = joblib.load("diabetes_model.pkl")
+
+# Title
+st.title("🩺 Diabetes Prediction App")
 st.subheader("Fill these data:")
+st.write("Enter patient information below:")
 
-# Input fields for each feature
-pregnancies = st.number_input("Pregnancies")
-glucose = st.number_input("Glucose Level")
-blood_pressure = st.number_input("Blood Pressure")
-skin_thickness = st.number_input("Skin Thickness")
-insulin = st.number_input("Insulin Level")
-bmi = st.number_input("BMI")
-diabetes_pedigree = st.number_input("Diabetes Pedigree Function")
-age = st.number_input("Age")
+# Inputs
+pregnancies = st.number_input("Pregnancies", min_value=0)
+glucose = st.number_input("Glucose", min_value=0)
+blood_pressure = st.number_input("Blood Pressure", min_value=0)
+skin_thickness = st.number_input("Skin Thickness", min_value=0)
+insulin = st.number_input("Insulin", min_value=0)
+bmi = st.number_input("BMI", min_value=0.0)
+dpf = st.number_input("Diabetes Pedigree Function", min_value=0.0)
+age = st.number_input("Age", min_value=0)
 
+if st.button("Predict"):
 
-
-if st.button("Submit"):
     data = pd.DataFrame({
-        "Pregnancies": [pregnancies],
-        "Glucose": [glucose],
-        "BloodPressure": [blood_pressure],
-        "SkinThickness": [skin_thickness],
-        "Insulin": [insulin],
-        "BMI": [bmi],
-        "DiabetesPedigreeFunction": [diabetes_pedigree],
-        "Age": [age]
+        "Pregnancies":[pregnancies],
+        "Glucose":[glucose],
+        "BloodPressure":[blood_pressure],
+        "SkinThickness":[skin_thickness],
+        "BMI":[bmi],
+        "DiabetesPedigreeFunction":[dpf],
+        "Age":[age]
     })
-    pred = lr_model.predict(data)
-    
-    if pred[0] == 1:
-        st.success("You have Diabetes")
+
+    probability = model.predict_proba(data)[0][1]
+
+    prediction = int(probability >= 0.35)
+
+    st.write(f"Probability: {probability:.2%}")
+
+    if prediction == 1:
+        st.error("⚠️ High Risk of Diabetes")
     else:
-        st.success("You don't have Diabetes")
+        st.success("✅ Low Risk of Diabetes")
+
+
+
